@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Random extends CommandBase{
 
-    private XboxController controller;
     private Drive drive;
+    private float angularVelocity;
 
-    public Random(XboxController controller, Drive drive){
-        this.controller = controller;
+    public Random(Drive drive){
         this.drive = drive;
+        angularVelocity = 0;
     }
 
     @Override
@@ -19,6 +19,12 @@ public class Random extends CommandBase{
 
     @Override
     public void execute(){
-        drive.tankDrive(-controller.getY(0), -controller.getY(1), false);
+        drive.tankDrive(-0.1f, -angularVelocity, false);
+        angularVelocity += 0.05f;
+    }
+
+    @Override
+    public boolean isFinished(){
+        return angularVelocity >= 1;
     }
 }
